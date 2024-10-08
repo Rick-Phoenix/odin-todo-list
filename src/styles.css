@@ -59,16 +59,21 @@ main {
     display: flex;
     flex-direction: column;
     padding: 20px;
+    gap: 15px;
+    box-sizing: border-box;
 }
 
 .task {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    border-bottom: solid;
+    padding-bottom: 15px;
 
-    *::before {
+    *:not(input):not(label):not(.inputGroup):not(button):not(form):not(dialog):not(span):not(ul):not(li)::before {
         font-weight: bold;
         content: var(--pseudo);
+        margin-right: 10px;
     }
 
     .taskHeader {
@@ -77,12 +82,73 @@ main {
         * {
             flex: 1;
         }
+
+        .title {
+            font-weight: 600;
+                font-style: italic;
+            font-size: 20px;
+        }
+
     }
 
+    .checklist,
+    .notes {
+        display: flex;
+        gap: 15px; 
+        flex-wrap: wrap;
 
+        .inputGroup {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+    button:not(.save) {
+    background-color: transparent;
+    border: none;
+    background-repeat: no-repeat;
+    max-width: 20px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+        
+    }
+
+    button.addCheck {
+        width: 20px;
+    }
 }
 
+form {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
+input.priority {
+    width: 30px;
+    margin-right: 10px;
+    
+}
 
+button.addCheck {
+    background-image: url(./Icons/addCheck.svg);
+}
 
+button.addNote {
+    background-image: url(./Icons/addNote.svg);
+}
 
+button.remove {
+    background-image: url(./Icons/close.svg);
+}
+
+ul.hidden {
+    display: none;
+}
+
+.liFlex {
+    display: flex;
+}

@@ -13,32 +13,19 @@
                 <img src="./Icons/plus.svg" alt="">
                 <span>Add New Project</span>
             </a>
+            <form id="newTask">
+                <label for="title">Title</label>
+                <input type="text" name="" id="title" placeholder="Your title">
+                <label for="date">Date</label>
+                <input type="text" name="" id="date" placeholder="YYYY-MM-DD">
+                <label for="priority">Priority</label>
+                <span><input type="number" name="" id="priority" class="priority" pattern="[12345]" max="5">/5</span>
+                <label for="description">Description</label>
+                <input type="text" name="" id="description" placeholder="Description">
+            </form>
         </nav>
         <main>
             <div id="taskboard">
-                <div class="task">
-                    <div class="taskHeader">
-                        <div class="title">
-                            Test
-                        </div>
-                        <div class="date">
-                            Test
-                        </div>
-                        <div class="priority">
-                            Test
-                        </div>
-                    </div>
-                    <div class="taskDesc">
-                        
-                    </div>
-                    <div class="checkList">
-                        <label for="test">Test</label>
-                        <input type="checkbox" name="test" id="test">
-                    </div>
-                    <div class="notes">
-                        Test
-                    </div>
-                </div>
             </div>
         </main>
     </div>
