@@ -1,7 +1,6 @@
 import "./styles.css";
 import * as sel from "./selectors.js";
-import close from "./Icons/close.svg";
-import add from "./Icons/addCheck.svg";
+
 
 const today = new Date().toISOString().split('T')[0];
 sel.date.setAttribute('min', today);
@@ -28,13 +27,13 @@ sel.addBtn.addEventListener('click', (e) => {
 })
 
 class Task {
-    constructor(title, date, priority, description) {
+    constructor(title, date, priority, description, checklist, notes) {
         this.title = title
         this.date = date
         this.priority = priority
         this.description = description
-        this.checklist = []
-        this.notes = [];
+        this.checklist = checklist || [];
+        this.notes = notes || [];
     }
 
     toJSON() {
@@ -59,6 +58,68 @@ class Task {
         const value = JSON.stringify(this);
         localStorage.setItem(key, value);
     }
+
+    update() {
+        localStorage.removeItem(this.title);
+        this.saveToLocalStorage();
+    };
+
+    updateToDoList(target) {
+        const checkList = JSON.parse(localStorage.getItem(this.title)).checklist;
+
+        for (const item of checkList) {
+        const value = item;
+        const label = createElement('label');
+        label.setAttribute('for', `${value}`);
+        label.textContent = `${value}`;
+
+        const check = createElement('input');
+        check.setAttribute('type', 'checkbox');
+        const inputGroup = createElement('div', 'inputGroup');
+
+        check.addEventListener('change', () => {
+            if (check.checked == true) {
+                label.style.textDecoration = 'line-through';
+                inputGroup.remove();
+                const index = this.checklist.indexOf(item.value);
+                this.checklist.splice(index, 1);
+                this.update();
+            }
+        });
+
+        
+        inputGroup.append(label, check);
+        target.append(inputGroup);
+        }
+    };
+
+    updateNotes(target) {
+        target.classList.remove('hidden');
+
+        const notes = JSON.parse(localStorage.getItem(this.title)).notes;
+
+        for (const note of notes) {
+        const content = createElement('li', 'note');
+        const contentFlex = createElement('span', 'liFlex');
+        contentFlex.textContent = `${note}`;
+        
+
+        const removeBtn = createElement('button', 'remove');
+        removeBtn.addEventListener('click', () => {
+            content.remove();
+            const index = this.notes.indexOf(note);
+            this.notes.splice(index, 1);
+            this.update();
+            if (this.notes.length < 1 ) target.classList.add('hidden');
+        });
+
+        contentFlex.append(removeBtn);
+        content.append(contentFlex);
+        target.append(content);
+        }
+
+       
+    } 
 
     createTask() {
     const task = createElement('div', 'task');
@@ -107,6 +168,7 @@ class Task {
             };
 
             this.checklist.push(input.value);
+            this.update();
             
             const label = createElement('label');
             label.setAttribute('for', `${value}`);
@@ -114,13 +176,19 @@ class Task {
 
             const check = createElement('input');
             check.setAttribute('type', 'checkbox');
+            const inputGroup = createElement('div', 'inputGroup');
 
             check.addEventListener('change', () => {
-                if (check.checked == true) label.style.textDecoration = 'line-through';
-                else label.style.textDecoration = 'none';
+                if (check.checked == true) {
+                label.style.textDecoration = 'line-through';
+                inputGroup.remove();
+                const index = this.checklist.indexOf(input.value);
+                this.checklist.splice(index, 1);
+                this.update();
+            }
             });
 
-            const inputGroup = createElement('div', 'inputGroup');
+            
 
             inputGroup.append(label, check);
             list.append(inputGroup);
@@ -134,10 +202,14 @@ class Task {
     });
 
     list.append(addCheck);
-   
+    if (this.checklist.length > 0) this.updateToDoList(list);
+
     const notes = createElement('div', 'notes');
     createPseudo(notes, 'Notes:');
     const addNote = createElement('button', 'addNote');
+
+    const notesList = createElement('ul', 'notesList', 'hidden');
+    if (this.notes.length > 0) this.updateNotes(notesList);
 
     addNote.addEventListener('click', () => {
         const modal = createElement('dialog');
@@ -164,6 +236,7 @@ class Task {
 
             notesList.classList.remove('hidden');
             this.notes.push(value);
+            this.update();
 
             const content = createElement('li', 'note');
             const contentFlex = createElement('span', 'liFlex');
@@ -197,7 +270,7 @@ class Task {
         localStorage.removeItem(this.title);
     });
 
-    const notesList = createElement('ul', 'notesList', 'hidden');
+    
     taskHeader.append(title, date, priority, removeBtn);
     task.append(taskHeader, taskDesc, list, notes, notesList);
     sel.board.append(task);
