@@ -23,6 +23,11 @@ nav {
     display: grid;
     grid-template-rows: 10vh 8vh auto;
     grid-template-columns: auto;
+
+    input {
+        height: 25px;
+        border-radius: 10px;
+    }
 }
 
 main {
@@ -78,6 +83,7 @@ main {
 
     .taskHeader {
         display: flex;
+        gap: 20px;
 
         * {
             flex: 1;
@@ -118,6 +124,10 @@ main {
     button.addCheck {
         width: 20px;
     }
+
+    label {
+        text-align: center;
+    }
 }
 
 form {
@@ -151,4 +161,13 @@ ul.hidden {
 
 .liFlex {
     display: flex;
+}
+
+button.save {
+
+    height: 30px;
+}
+
+button.save::before {
+    content: 'Save';
 }

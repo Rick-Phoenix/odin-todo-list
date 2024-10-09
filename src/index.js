@@ -22,6 +22,7 @@ sel.addBtn.addEventListener('click', (e) => {
             const newTask = new Task(title, date, priority, description);
             newTask.createTask();
             newTask.saveToLocalStorage();
+            sel.form.reset();
         } else alert('Invalid form. Please fill the form with all the necessary values.');
     
 })
