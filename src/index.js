@@ -81,7 +81,7 @@ class Task {
             if (check.checked == true) {
                 label.style.textDecoration = 'line-through';
                 inputGroup.remove();
-                const index = this.checklist.indexOf(item.value);
+                const index = this.checklist.indexOf(value);
                 this.checklist.splice(index, 1);
                 this.update();
             }
@@ -247,6 +247,7 @@ class Task {
                 content.remove();
                 const index = this.notes.indexOf(value);
                 this.notes.splice(index, 1);
+                this.update();
                 if (this.notes.length < 1 ) notesList.classList.add('hidden');
             });
 
