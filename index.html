@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="wrapper">
+        <nav>
+            <span>Organizer</span>
+            <a href="" id="addTask">
+                <img src="3cffe9a515498593b872.svg" alt="">
+                <span>Add New Project</span>
+            </a>
+            <form id="newTask">
+                <label for="title">Title</label>
+                <input type="text" name="" id="title" placeholder="Your title" required>
+                <label for="date">Date</label>
+                <input type="date" name="" id="date" placeholder="YYYY-MM-DD" required>
+                <label for="priority">Priority</label>
+                <span><input type="number" name="" id="priority" class="priority" pattern="[12345]" max="5" required>/5</span>
+                <label for="description">Description</label>
+                <input type="text" name="" id="description" placeholder="Description" required>
+            </form>
+        </nav>
+        <main>
+            <div id="taskboard">
+            </div>
+        </main>
+    </div>
+</body>
+</html>
